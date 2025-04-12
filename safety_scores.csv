@@ -1,101 +1,111 @@
-Location,Score
-Lincoln Park,0.85
-Lakeview,0.80
-Gold Coast,0.90
-Old Town,0.78
-West Loop,0.75
-River North,0.80
-Streeterville,0.82
-Edgewater,0.70
-Beverly,0.65
-Hyde Park,0.70
-Jefferson Park,0.68
-Norwood Park,0.80
-Edison Park,0.82
-Forest Glen,0.77
-Rogers Park,0.60
-Portage Park,0.68
-Logan Square,0.65
-Avondale,0.60
-Bridgeport,0.72
-Mount Greenwood,0.55
-Albany Park,0.60
-West Town,0.72
-Dunning,0.70
-Pilsen,0.55
-Belmont Cragin,0.50
-Uptown,0.65
-Back of the Yards,0.45
-West Ridge,0.68
-Pullman,0.40
-Hegewisch,0.45
-South Loop,0.75
-Kenwood,0.70
-Armour Square,0.78
-Archer Heights,0.50
-Brighton Park,0.55
-Irving Park,0.70
-O'Hare,0.60
-Ashburn,0.45
-McKinley Park,0.50
-Chatham,0.45
-West Garfield Park,0.30
-East Garfield Park,0.25
-Austin,0.30
-Englewood,0.25
-West Englewood,0.20
-South Shore,0.35
-Roseland,0.30
-North Lawndale,0.20
-Fuller Park,0.25
-Washington Park,0.35
-Grand Boulevard,0.40
-Gage Park,0.45
-Garfield Ridge,0.60
-Clearing,0.65
-Douglas,0.55
-Bronzeville,0.60
-Little Village,0.50
-Lawndale,0.40
-New City,0.50
-Humboldt Park,0.55
-Woodlawn,0.35
-Burnside,0.55
-Avalon Park,0.50
-Calumet Heights,0.45
-South Deering,0.45
-East Side,0.40
-Morgan Park,0.70
-South Chicago,0.50
-West Pullman,0.35
-Riverdale,0.45
-West Elsdon,0.55
-West Lawn,0.60
-Chicago Lawn,0.50
-North Park,0.70
-Hermosa,0.60
-Sauganash,0.80
-Peterson Park,0.68
-Mayfair,0.70
-Clearing East,0.65
-Scottsdale,0.75
-Beverly Hills,0.70
-Galewood,0.55
-Portage Park East,0.68
-Avondale West,0.65
-North Center,0.80
-Ravenswood,0.80
-Lincoln Square,0.75
-Wrigleyville,0.80
-Boystown,0.82
-Andersonville,0.80
-Chinatown,0.70
-Near North Side,0.85
-Near West Side,0.65
-Near South Side,0.60
-East Pilsen,0.50
-The Island,0.55
-Chicago Midway,0.40
-Little Italy,0.70
-Prairie District,0.75
-Jackson Park Highlands,0.65
+Location,Latitude,Longitude,SafetyScore
+Lincoln Park,41.9250,-87.6500,0.90
+Lakeview,41.9400,-87.6500,0.85
+Gold Coast,41.9000,-87.6330,0.95
+Old Town,41.8930,-87.6330,0.80
+West Loop,41.8820,-87.6440,0.80
+River North,41.8920,-87.6390,0.85
+Streeterville,41.8920,-87.6190,0.85
+Edgewater,41.9830,-87.6740,0.65
+Beverly,41.7500,-87.6800,0.70
+Hyde Park,41.7940,-87.5910,0.75
+Jefferson Park,41.9720,-87.7520,0.80
+Norwood Park,41.9630,-87.8130,0.85
+Edison Park,41.9850,-87.8240,0.85
+Forest Glen,41.9900,-87.7850,0.80
+Rogers Park,42.0100,-87.6750,0.65
+Portage Park,41.9520,-87.7670,0.70
+Logan Square,41.9250,-87.6990,0.75
+Avondale,41.9280,-87.7100,0.70
+Bridgeport,41.8470,-87.6550,0.65
+Mount Greenwood,41.7700,-87.7300,0.65
+Albany Park,41.9670,-87.7090,0.70
+West Town,41.8840,-87.6970,0.80
+Dunning,41.9680,-87.7450,0.70
+Pilsen,41.8530,-87.6680,0.65
+Belmont Cragin,41.9640,-87.7630,0.55
+Uptown,41.9660,-87.6670,0.65
+Back of the Yards,41.8130,-87.6500,0.60
+West Ridge,42.0050,-87.6970,0.75
+Pullman,41.7220,-87.5790,0.65
+Hegewisch,41.6310,-87.6010,0.50
+South Loop,41.8600,-87.6250,0.85
+Kenwood,41.8050,-87.5890,0.75
+Armour Square,41.8760,-87.6380,0.80
+Archer Heights,41.8400,-87.7550,0.60
+Brighton Park,41.8150,-87.7500,0.60
+Irving Park,41.9530,-87.7610,0.65
+O'Hare,41.9740,-87.9040,0.50
+Ashburn,41.7960,-87.7440,0.55
+McKinley Park,41.8500,-87.7010,0.65
+Chatham,41.7600,-87.6230,0.50
+West Garfield Park,41.8820,-87.7200,0.30
+East Garfield Park,41.8800,-87.7100,0.30
+Austin,41.8820,-87.7310,0.35
+Englewood,41.7750,-87.6400,0.25
+West Englewood,41.7730,-87.6500,0.20
+South Shore,41.7800,-87.5800,0.65
+Roseland,41.8000,-87.5500,0.30
+North Lawndale,41.8700,-87.7100,0.30
+Fuller Park,41.8000,-87.6300,0.40
+Washington Park,41.8000,-87.6400,0.35
+Grand Boulevard,41.8100,-87.6400,0.40
+Gage Park,41.8300,-87.6600,0.45
+Garfield Ridge,41.8400,-87.7600,0.60
+Clearing,41.9400,-87.7800,0.65
+Douglas,41.8700,-87.6300,0.60
+Bronzeville,41.8000,-87.6300,0.60
+Little Village,41.8450,-87.7070,0.55
+Lawndale,41.8800,-87.7400,0.35
+New City,41.8000,-87.6400,0.55
+Humboldt Park,41.9050,-87.7010,0.60
+Woodlawn,41.7800,-87.6000,0.35
+Burnside,41.7600,-87.6400,0.55
+Avalon Park,41.7900,-87.6000,0.40
+Calumet Heights,41.7500,-87.5500,0.35
+South Deering,41.7500,-87.5800,0.35
+East Side,41.8000,-87.5700,0.55
+Morgan Park,41.7200,-87.6300,0.80
+South Chicago,41.7800,-87.5800,0.60
+West Pullman,41.7400,-87.6400,0.40
+Riverdale,41.7400,-87.6000,0.55
+West Elsdon,41.8000,-87.7300,0.60
+West Lawn,41.7800,-87.6800,0.50
+Chicago Lawn,41.8100,-87.6800,0.50
+North Park,41.9900,-87.7600,0.80
+Hermosa,41.8700,-87.7500,0.70
+Sauganash,41.9800,-87.7500,0.90
+Peterson Park,41.9320,-87.6700,0.70
+Mayfair,41.9200,-87.6800,0.75
+Clearing East,41.9500,-87.7700,0.65
+Scottsdale,41.9500,-87.7700,0.65
+Beverly Hills,41.9000,-87.6800,0.85
+Galewood,41.9200,-87.7000,0.70
+Portage Park East,41.9600,-87.7800,0.80
+Avondale West,41.9300,-87.7100,0.70
+North Center,41.9400,-87.6800,0.80
+Ravenswood,41.9800,-87.6800,0.80
+Lincoln Square,42.0100,-87.7000,0.85
+Wrigleyville,41.9400,-87.6560,0.80
+Boystown,41.9000,-87.6600,0.85
+Andersonville,42.0100,-87.6700,0.85
+Chinatown,41.8500,-87.6480,0.80
+Near North Side,41.9000,-87.6300,0.90
+Near West Side,41.8700,-87.6800,0.75
+Near South Side,41.8600,-87.6250,0.70
+East Pilsen,41.8600,-87.6700,0.60
+The Island,41.8780,-87.6300,0.85
+Chicago Midway,41.7850,-87.7520,0.50
+Little Italy,41.8790,-87.6460,0.80
+Prairie District,41.8800,-87.6300,0.85
+Jackson Park Highlands,41.7850,-87.5800,0.65
+Pullman National Monument,41.6819,-87.6083,0.70
+Devon Avenue,41.9987,-87.6978,0.70
+Museum Campus,41.8663,-87.6167,0.90
+Millennium Park,41.8826,-87.6226,0.95
+Navy Pier,41.8916,-87.6079,0.90
+UIC,41.8708,-87.6498,0.80
+University of Chicago,41.7897,-87.5996,0.90
+Wrigley Field,41.9484,-87.6553,0.85
+Greektown,41.8807,-87.6484,0.85
+Southport Corridor,41.9440,-87.6632,0.80
