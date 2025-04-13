@@ -3,21 +3,21 @@ import folium
 import pandas as pd
 import numpy as np
 from geopy.distance import geodesic
-from safe_path_router import SafePathRouter 
+from safe_path_router import SafePathRouter  # Update this if needed
 
 # --- Load Model and Scaler ---
 model = joblib.load("safety_score_rf_model.pkl")
 scaler = joblib.load("safety_score_scaler.pkl")
 
-# --- Define Start & End Coordinates (High Crime Area Test) ---
-start_coords = (41.8818, -87.7295)  # Near Madison & Pulaski (Garfield Park)
-end_coords = (41.8946, -87.7558)    # Austin neighborhood
+# --- Define Start & End Coordinates ---
+start_coords = (41.7796, -87.6636)  # West Garfield Park
+end_coords = (41.7681, -87.6435)    # Austin
 
-# --- Graph Buffer Distance ---
+# --- Estimate Coverage Distance ---
 D = geodesic(start_coords, end_coords).meters
-dist_meters = int(D * 2.5)
+dist_meters = 400
 
-# --- Initialize SafePathRouter ---
+# --- Initialize Router ---
 router = SafePathRouter(
     start_coords=start_coords,
     end_coords=end_coords,
@@ -27,17 +27,24 @@ router = SafePathRouter(
     assign_scores=True
 )
 
-# --- Lambda Values to Try ---
+# --- Lambda values & colors ---
 lambda_values = [0, 10, 100, 1000, 10000]
 colors = ['red', 'orange', 'yellow', 'green', 'blue']
 path_data = []
 
-# --- Initialize Map ---
+# === 🔽 Start of Replaced Section 🔽 ===
+
+# --- Get initial map location ---
 initial_path = router.get_path(lambda_val=lambda_values[0])
 start_latlon = (router.G.nodes[initial_path[0]]['y'], router.G.nodes[initial_path[0]]['x'])
+end_latlon = (router.G.nodes[initial_path[-1]]['y'], router.G.nodes[initial_path[-1]]['x'])
 m = folium.Map(location=start_latlon, zoom_start=15)
 
-# --- Loop through Lambda Values ---
+# --- Add Start and End Markers ---
+folium.Marker(start_latlon, popup='Start', icon=folium.Icon(color='green')).add_to(m)
+folium.Marker(end_latlon, popup='End', icon=folium.Icon(color='red')).add_to(m)
+
+# --- Draw all lambda paths ---
 for lam, color in zip(lambda_values, colors):
     try:
         path = router.get_path(lambda_val=lam)
@@ -63,12 +70,29 @@ for lam, color in zip(lambda_values, colors):
     except Exception as e:
         print(f"❌ Failed to compute path for lambda={lam}: {e}")
 
+# --- Add Legend ---
+legend_html = """
+<div style="position: fixed;
+     bottom: 20px; left: 20px; width: 180px; height: 140px;
+     border:2px solid grey; z-index:9999; font-size:14px;
+     background-color:white; padding: 10px;">
+     <b>Path Lambda Legend</b><br>
+     <i style="color:red;">●</i> Lambda 0<br>
+     <i style="color:orange;">●</i> Lambda 10<br>
+     <i style="color:yellow;">●</i> Lambda 100<br>
+     <i style="color:green;">●</i> Lambda 1000<br>
+     <i style="color:blue;">●</i> Lambda 10000<br>
+</div>
+"""
+m.get_root().html.add_child(folium.Element(legend_html))
+
 # --- Save Map ---
 m.save("multi_lambda_paths_map.html")
-print("🗺️  Saved interactive map to 'multi_lambda_paths_map.html'")
+print("🗺️  Map with legend and markers saved to 'multi_lambda_paths_map.html'")
 
-# --- Output Table ---
+# === 🔼 End of Replaced Section 🔼 ===
+
+# --- Display Stats Table ---
 df = pd.DataFrame(path_data)
 print("\n📊 Lambda Comparison Table:\n")
 print(df.to_string(index=False))
-
