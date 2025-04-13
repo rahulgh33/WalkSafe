@@ -10,3 +10,9 @@ This project calculates pedestrian routes in Chicago that balance both **distanc
 ```python
 start_coords = (41.7796, -87.6636)  # West Garfield Park  
 end_coords = (41.7681, -87.6435)    # Austin
+```
+
+## Results
+
+1. Output will be stored in `multi_lambda_paths_map.html`
+2. Type `open multi_lambda_paths_map.html` in your terminal to open it
