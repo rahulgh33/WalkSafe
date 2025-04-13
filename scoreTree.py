@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib
 
 # --------------------------
 # 1. Load and Merge Data
@@ -113,6 +114,8 @@ print(f"MSE: {mean_squared_error(y_test, improved_preds):.4f}")
 print(f"MAE: {mean_absolute_error(y_test, improved_preds):.4f}")
 print(f"R²: {r2_score(y_test, improved_preds):.4f}")
 
+joblib.dump(improved_model, "safety_score_rf_model.pkl")
+joblib.dump(scaler, "safety_score_scaler.pkl")
 # ==================================================================
 # Further Diagnostic Analysis: Repeated K-Fold and Learning Curves
 # ==================================================================
