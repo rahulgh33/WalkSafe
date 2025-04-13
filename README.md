@@ -1,6 +1,6 @@
-# SafePath: Safety-Aware Routing in Chicago
+# WalkSafe: Safety-Aware Routing
 
-This project calculates pedestrian routes in Chicago that balance both **distance** and **safety**, using real-world crime, lighting, and emergency infrastructure data.
+One of our most common concerns as a college student is our own safety. Staying up late and then walking home at night can be a daunting experience. We want to make sure that students feel safe walking home. We recommend the safest possible routes, utilizing city data. We take violent crime, nearby lighting, and distance to emergency centers into consideration to curate the best route. 
 
 ## How to Run
 
