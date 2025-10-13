@@ -1,18 +1,69 @@
-# WalkSafe: Safety-Aware Routing
+# WalkSafe
+**Urban navigation system combining street-level safety modeling with graph-based routing.**
 
-One of our most common concerns as a college student is our own safety. Staying up late and then walking home at night can be a daunting experience. We want to make sure that students feel safe walking home. We recommend the safest possible routes, utilizing city data. We take violent crime, nearby lighting, and distance to emergency centers into consideration to curate the best route. 
+WalkSafe computes safer pedestrian routes by integrating machine-learned safety scores into a shortest-path search over real city street graphs.  
+The system combines data on crime density, lighting, and proximity to emergency services to estimate relative safety at the street level.
 
-## How to Run
+---
 
-1. Open the `safe_path_test.py` script.
-2. Set your desired start and end coordinates on the following lines:
+## 🧠 Overview
 
-```python
-start_coords = (41.7796, -87.6636)  # West Garfield Park  
-end_coords = (41.7681, -87.6435)    # Austin
-```
+WalkSafe models urban safety as a spatially varying risk field.  
+Each street segment (graph node) is assigned a **safety score** predicted by a Random Forest trained on real geospatial data.  
+Routing then minimizes a weighted cost function:
 
-## Results
+\[
+\text{cost}(edge) = \text{distance} + \lambda \times (1 - \text{safety})
+\]
 
-1. Output will be stored in `multi_lambda_paths_map.html`
-2. Type `open multi_lambda_paths_map.html` in your terminal to open it
+By adjusting λ, users can explore the trade-off between the shortest and the safest path.
+
+---
+
+## 🧩 System Architecture
+               ┌────────────────────────────┐
+               │   Raw Geospatial Datasets   │
+               │ (Crime, Lighting, Services) │
+               └──────────────┬──────────────┘
+                              │
+                              ▼
+                ┌────────────────────────────┐
+                │   Feature Extraction Layer  │
+                │  (GeoPandas + OSM data)     │
+                └──────────────┬──────────────┘
+                              │
+                              ▼
+               ┌──────────────────────────────┐
+               │  Random Forest Safety Model   │
+               │ (scikit-learn, trained offline)│
+               └──────────────┬───────────────┘
+                              │
+                              ▼
+               ┌──────────────────────────────┐
+               │   Precomputed Node Scoring    │
+               │ (Applied to OSM street graph) │
+               └──────────────┬───────────────┘
+                              │
+                              ▼
+               ┌──────────────────────────────┐
+               │  Routing Engine (Flask API)   │
+               │  Dijkstra search w/ λ-safety  │
+               └──────────────────────────────┘
+
+---
+
+## 🧰 Tech Stack
+- **Python**, **Flask**
+- **scikit-learn**, **GeoPandas**, **osmnx**, **Folium**
+- **Docker** for containerization  
+- **GitHub Actions** for continuous integration and testing
+
+---
+
+## ⚙️ Development Setup
+
+**Clone and install dependencies:**
+```bash
+git clone https://github.com/rahulgh33/WalkSafe.git
+cd WalkSafe
+pip install -r requirements.txt
