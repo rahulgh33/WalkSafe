@@ -1,7 +1,9 @@
+import os
 import osmnx as ox
 import networkx as nx
 import numpy as np
 import folium
+import joblib
 from getFeatures import compute_features
 import pandas as pd
 import time
@@ -17,10 +19,21 @@ class SafePathRouter:
         self.end_coords = end_coords
         self.model = model
         self.scaler = scaler
+        self.feature_columns = joblib.load("feature_columns.pkl")
         self.center = self._compute_midpoint(start_coords, end_coords)
 
         print("📡 Downloading graph...")
-        self.G = ox.graph_from_point(self.center, dist=dist_meters, network_type=network_type)
+        graph_file = "cached_graph.graphml"
+
+        if os.path.exists(graph_file):
+          print("📂 Loading cached graph from disk...")
+          self.G = ox.load_graphml(graph_file)
+        else:
+          print("🌐 Downloading new OSM graph (first run only)...")
+          self.G = ox.graph_from_point(self.center, dist=dist_meters, network_type=network_type)
+          ox.save_graphml(self.G, graph_file)
+          print(f"✅ Graph saved to {graph_file} for future runs.")
+
         ox.distance.add_edge_lengths(self.G)
 
         print("🧹 Filtering to intersections...")
@@ -46,7 +59,14 @@ class SafePathRouter:
         return (lat, lon)
 
     def _predict_safety_score(self, lat, lon):
+        t0 = time.time()
+        print(f"\n🧩 Predicting safety for ({lat:.5f}, {lon:.5f})")
+
+        t1 = time.time()
         features_dict = compute_features(lat, lon)
+        print(f"⏱️ compute_features took {time.time() - t1:.2f}s")
+
+
 
         feature_vector = pd.DataFrame([{
             "NumPOIs": features_dict["NumPOIs"],
@@ -69,28 +89,55 @@ class SafePathRouter:
             "Longitude": features_dict["Longitude"]
         }])
 
+        # Reindex to match training feature order
+        feature_vector = feature_vector.reindex(columns=self.feature_columns, fill_value=0)
+
+        t2 = time.time()
         scaled_vector = self.scaler.transform(feature_vector)
-        return float(self.model.predict(scaled_vector)[0])
+        pred = float(self.model.predict(scaled_vector)[0])
+        print(f"🧠 ML prediction took {time.time() - t2:.2f}s (total {time.time() - t0:.2f}s)")
 
     def _assign_safety_scores(self):
-        total = len(self.G.nodes)
-        start_time = time.time()
-        for i, node in enumerate(self.G.nodes):
-            try:
-                pt_proj = Point(self.G.nodes[node]['x'], self.G.nodes[node]['y'])
-                pt_latlon, _ = ox.projection.project_geometry(pt_proj, crs=self.G.graph["crs"], to_latlong=True)
-                lat, lon = pt_latlon.y, pt_latlon.x
-                score = self._predict_safety_score(lat, lon)
-            except Exception as e:
-                print(f"⚠️ Warning: Failed to compute safety at ({lat:.4f}, {lon:.4f}) — {e}")
-                score = 0.5
-            self.G.nodes[node]['safety_score'] = score
+      import pandas as pd
+      import numpy as np
+      import os
+      from scipy.spatial import cKDTree
 
-            if (i + 1) % 10 == 0 or (i + 1) == total:
-                print(f"🧮 Processed {i + 1}/{total} nodes")
+      precomputed_path = "precomputed_safety_scores.csv"
 
-        elapsed = time.time() - start_time
-        print(f"⏱️ Safety scoring took {elapsed:.1f} seconds for {total} nodes.")
+      if os.path.exists(precomputed_path):
+        print("📂 Loading precomputed safety scores...")
+        df = pd.read_csv(precomputed_path)
+
+        # Build KD-tree for fast nearest neighbor lookup
+        tree = cKDTree(df[["lat", "lon"]].values)
+
+        for node in self.G.nodes:
+            y, x = self.G.nodes[node]['y'], self.G.nodes[node]['x']
+            dist, idx = tree.query([y, x])
+            self.G.nodes[node]['safety_score'] = float(df.iloc[idx]["score"])
+
+        print(f"✅ Assigned precomputed safety scores to {len(self.G.nodes)} nodes.")
+        return
+
+      # Fallback if no precomputed CSV exists
+      print("⚠️ precomputed_safety_scores.csv not found; recomputing live (slow)...")
+      total = len(self.G.nodes)
+      for i, node in enumerate(self.G.nodes):
+        try:
+            pt_proj = Point(self.G.nodes[node]['x'], self.G.nodes[node]['y'])
+            pt_latlon, _ = ox.projection.project_geometry(pt_proj, crs=self.G.graph["crs"], to_latlong=True)
+            lat, lon = pt_latlon.y, pt_latlon.x
+            score = self._predict_safety_score(lat, lon)
+        except Exception as e:
+            print(f"⚠️ Warning: Failed to compute safety at ({lat:.4f}, {lon:.4f}) — {e}")
+            score = 0.5
+        self.G.nodes[node]['safety_score'] = score
+
+        if (i + 1) % 10 == 0 or (i + 1) == total:
+            print(f"🧮 Processed {i + 1}/{total} nodes")
+
+      print("✅ Node scoring complete.")
 
     def _update_edge_weights(self, lambda_val):
         for u, v, key, data in self.G.edges(keys=True, data=True):

@@ -104,3 +104,24 @@ def compute_features(lat, lon):
     features.update(crime_counts)
 
     return features
+
+
+if __name__ == "__main__":
+    import numpy as np
+
+    # Define a grid of coordinates around downtown Chicago
+    lat_center, lon_center = 41.8781, -87.6298
+    offsets = np.linspace(-0.02, 0.02, 5)
+
+    rows = []
+    for dlat in offsets:
+        for dlon in offsets:
+            lat, lon = lat_center + dlat, lon_center + dlon
+            print(f"Computing features for ({lat:.5f}, {lon:.5f}) ...")
+            features = compute_features(lat, lon)
+            rows.append(features)
+
+    df = pd.DataFrame(rows)
+    df.to_csv("features_final.csv", index=False)
+    print(f"\n✅ Saved features_final.csv with {len(df)} rows")
+

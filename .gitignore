@@ -1,0 +1,10 @@
+__pycache__/
+cache/
+cached_graph.graphml
+features_final.csv
+safety_scores.csv
+*.pyc
+*.pyo
+*.DS_Store
+.env
+

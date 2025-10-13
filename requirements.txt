@@ -1,0 +1,12 @@
+flask
+osmnx
+geopandas
+folium
+scikit-learn
+tqdm
+requests
+joblib
+networkx
+shapely
+geopy
+
