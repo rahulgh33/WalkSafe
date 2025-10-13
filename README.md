@@ -88,8 +88,3 @@ docker run -p 5001:5001 walksafe
 
 WalkSafe is designed as an experimental framework for **data-driven urban navigation**, emphasizing explainability and public-safety modeling.  
 Its modular design allows substitution of models, additional features (e.g., temporal crime variation), or front-end map layers for real-time interaction.
-
----
-
-**Author:** [Rahul Ghosh](https://github.com/rahulgh33)  
-*Built as a research-driven exploration of safety-aware routing.*
