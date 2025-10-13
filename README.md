@@ -12,9 +12,8 @@ WalkSafe models urban safety as a spatially varying risk field.
 Each street segment (graph node) is assigned a **safety score** predicted by a Random Forest trained on real geospatial data.  
 Routing then minimizes a weighted cost function:
 
-\[
-\text{cost}(edge) = \text{distance} + \lambda \times (1 - \text{safety})
-\]
+**Cost Function:**  
+`cost(edge) = distance + λ × (1 - safety)`
 
 By adjusting λ, users can explore the trade-off between the shortest and the safest path.
 
