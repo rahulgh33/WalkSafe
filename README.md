@@ -21,34 +21,36 @@ By adjusting λ, users can explore the trade-off between the shortest and the sa
 ---
 
 ## 🧩 System Architecture
-               ┌────────────────────────────┐
-               │   Raw Geospatial Datasets   │
-               │ (Crime, Lighting, Services) │
-               └──────────────┬──────────────┘
-                              │
-                              ▼
-                ┌────────────────────────────┐
-                │   Feature Extraction Layer  │
-                │  (GeoPandas + OSM data)     │
-                └──────────────┬──────────────┘
-                              │
-                              ▼
-               ┌──────────────────────────────┐
-               │  Random Forest Safety Model   │
-               │ (scikit-learn, trained offline)│
-               └──────────────┬───────────────┘
-                              │
-                              ▼
-               ┌──────────────────────────────┐
-               │   Precomputed Node Scoring    │
-               │ (Applied to OSM street graph) │
-               └──────────────┬───────────────┘
-                              │
-                              ▼
-               ┌──────────────────────────────┐
-               │  Routing Engine (Flask API)   │
-               │  Dijkstra search w/ λ-safety  │
-               └──────────────────────────────┘
+```
+                   ┌────────────────────────────┐
+                   │   Raw Geospatial Datasets   │
+                   │ (Crime, Lighting, Services) │
+                   └──────────────┬──────────────┘
+                                  │
+                                  ▼
+                    ┌────────────────────────────┐
+                    │   Feature Extraction Layer  │
+                    │  (GeoPandas + OSM data)     │
+                    └──────────────┬──────────────┘
+                                  │
+                                  ▼
+                   ┌──────────────────────────────┐
+                   │  Random Forest Safety Model   │
+                   │ (scikit-learn, trained offline)│
+                   └──────────────┬───────────────┘
+                                  │
+                                  ▼
+                   ┌──────────────────────────────┐
+                   │   Precomputed Node Scoring    │
+                   │ (Applied to OSM street graph) │
+                   └──────────────┬───────────────┘
+                                  │
+                                  ▼
+                   ┌──────────────────────────────┐
+                   │  Routing Engine (Flask API)   │
+                   │  Dijkstra search w/ λ-safety  │
+                   └──────────────────────────────┘
+```
 
 ---
 
@@ -67,3 +69,27 @@ By adjusting λ, users can explore the trade-off between the shortest and the sa
 git clone https://github.com/rahulgh33/WalkSafe.git
 cd WalkSafe
 pip install -r requirements.txt
+```
+
+**Run locally:**
+```bash
+python app.py
+```
+
+**Containerize (optional):**
+```bash
+docker build -t walksafe .
+docker run -p 5001:5001 walksafe
+```
+
+---
+
+## 📖 Description
+
+WalkSafe is designed as an experimental framework for **data-driven urban navigation**, emphasizing explainability and public-safety modeling.  
+Its modular design allows substitution of models, additional features (e.g., temporal crime variation), or front-end map layers for real-time interaction.
+
+---
+
+**Author:** [Rahul Ghosh](https://github.com/rahulgh33)  
+*Built as a research-driven exploration of safety-aware routing.*
