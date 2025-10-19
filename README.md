@@ -78,7 +78,7 @@ python -m src.api.app
 **Containerize (optional):**
 ```bash
 docker build -t walksafe .
-docker run -p 5001:5001 walksafe
+docker run -p 5001:5000 walksafe
 ```
 
 ---
