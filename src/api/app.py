@@ -1,6 +1,8 @@
 import joblib
 from src.core.safe_path_router import SafePathRouter
 from flask import Flask, request, jsonify
+from flask import send_from_directory
+import os
 
 app = Flask(__name__)
 
@@ -8,9 +10,19 @@ app = Flask(__name__)
 model = joblib.load("models/safety_score_rf_model.pkl")
 scaler = joblib.load("models/safety_score_scaler.pkl")
 
-@app.route("/")
-def index():
-    return "✅ WalkSafe API is running!"
+# serve built frontend from repo-root/web
+FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "web"))
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_frontend(path):
+    # return asset if exists, otherwise fallback to index.html for SPA routing
+    if path and os.path.exists(os.path.join(FRONTEND_DIR, path)):
+        return send_from_directory(FRONTEND_DIR, path)
+    index_path = os.path.join(FRONTEND_DIR, "index.html")
+    if os.path.exists(index_path):
+        return send_from_directory(FRONTEND_DIR, "index.html")
+    return "Frontend not built. Run `npm run build` in frontend/.", 404
 
 @app.route("/route", methods=["GET"])
 def route():
@@ -100,7 +112,6 @@ def route_map():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 if __name__ == "__main__":
     import sys
