@@ -3,7 +3,7 @@ import folium
 import pandas as pd
 import numpy as np
 from geopy.distance import geodesic
-from safe_path_router import SafePathRouter  # Update this if needed
+from src.core.safe_path_router import SafePathRouter  # Update this if needed
 
 # --- Load Model and Scaler ---
 model = joblib.load("safety_score_rf_model.pkl")

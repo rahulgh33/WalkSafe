@@ -4,7 +4,7 @@ import networkx as nx
 import numpy as np
 import folium
 import joblib
-from getFeatures import compute_features
+from src.features.getFeatures import compute_features
 import pandas as pd
 import time
 from osmnx.simplification import consolidate_intersections
@@ -19,7 +19,7 @@ class SafePathRouter:
         self.end_coords = end_coords
         self.model = model
         self.scaler = scaler
-        self.feature_columns = joblib.load("feature_columns.pkl")
+        self.feature_columns = joblib.load("models/feature_columns.pkl")
         self.center = self._compute_midpoint(start_coords, end_coords)
 
         print("📡 Downloading graph...")

@@ -1,7 +1,7 @@
 import osmnx as ox
 import pandas as pd
 import joblib
-from getFeatures import compute_features
+from src.features.getFeatures import compute_features
 import numpy as np
 from tqdm import tqdm
 from shapely.geometry import Point

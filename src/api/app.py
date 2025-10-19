@@ -1,12 +1,12 @@
 import joblib
-from safe_path_router import SafePathRouter
+from src.core.safe_path_router import SafePathRouter
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 # Preload model + scaler once at startup
-model = joblib.load("safety_score_rf_model.pkl")
-scaler = joblib.load("safety_score_scaler.pkl")
+model = joblib.load("models/safety_score_rf_model.pkl")
+scaler = joblib.load("models/safety_score_scaler.pkl")
 
 @app.route("/")
 def index():
