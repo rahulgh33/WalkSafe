@@ -72,7 +72,7 @@ pip install -r requirements.txt
 
 **Run locally:**
 ```bash
-python app.py
+python -m src.api.app
 ```
 
 **Containerize (optional):**
