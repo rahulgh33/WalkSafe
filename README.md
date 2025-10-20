@@ -54,7 +54,7 @@ By adjusting λ, users can explore the trade-off between the shortest and the sa
 ---
 
 ## 🧰 Tech Stack
-- **Python**, **Flask** **React**
+- **Python**, **Flask**, **React**
 - **scikit-learn**, **GeoPandas**, **osmnx**, **Folium**
 - **Docker** for containerization  
 - **GitHub Actions** for continuous integration and testing
